@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html ng-app>
+
+<head>
+    <meta charset="utf-8">
+    <title>Dog's House</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body ng-controller="SacolaController">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index.html">Dog's House</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/meus-pedidos.html">Meus Pedidos</a></li> 
+                    <li><a href="/minha-conta.html">Minha Conta</a></li>
+                </ul>
+                <ul>
+                  <li class="sacola pull-right">
+                      <a href="/index.html">
+                        <i class="bag"></i>
+                          <p>
+                            Você tem<br>
+                            {{ sacola.obterTotal() }} produto(s)
+                            na sacola
+                          </p>                          
+                      </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+          <div class="col-xs-12">
+            <div class="col-md-12" id="pedidos">
+              <div class="nome-pagina">
+                <h3>Meus pedidos</h3>
+                <p>Listagem dos últimos pedidos</p> 
+                <hr>
+              </div>                          
+              <table class="table table-bordered table-hover table-responsive" ng-controller="ProdutoController">
+                <thead>
+                    <tr>
+                      <th>Produto(s)</th>
+                      <th class="align-center">Preço unitário</th>
+                      <th class="align-center">Quantidade</th>
+                      <th class="align-center">Total</th>
+                      <th class="align-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="produto in produtos" id="item{{ produto.id }}" class="produto">
+                    <td>
+                      <img ng-src="{{produto.imagem}}" alt="" />
+                      <p>{{produto.nome}}</p>
+                      <p>SKU: <strong>{{ produto.codigo }}</strong></p>
+                      <p>Estoque: <strong>{{ produto.estoque }}</strong></p>
+                    </td>
+                    <td class="align-center">
+                      <p id="item1_valor_unit"> R$ {{ produto.preco }}</p>
+                    </td>
+                    <td class="align-center quantidade">
+                      <p> {{ produto.quantidade }} </p>
+                    </td>                    
+                    <td class="align-center">
+                      <p id="item{{ produto.id }}_valor_total" class="valor-subtotal">R$ {{ produto.preco * produto.quantidade }}</p>
+                    </td>
+                    <td class="align-center status">
+                      <p>Entregue</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div> <!-- listagem dos últimos pedidos -->
+          </div>      
+      </div>
+    </div>
+
+   <footer class="footer">
+     <div class="container">
+       <p class="text-muted align-center"> 
+         Dog's House. Avenida das Américas, 4555, lj 101 - Barra da Tijuca, Rio de Janeiro - RJ | CEP 22620-000<br> 
+         2016 Todos os direitos reservados.<br> 
+       </p>
+     </div>
+   </footer> <!-- rodape -->
+
+
+    <script src="assets/js/lib/jquery.js"></script>
+    <script src="assets/js/lib/bootstrap.min.js"></script>   
+    <script src="assets/js/lib/angular.js"></script>
+    <script src="assets/js/lib/jquery.maskedinput.min.js"></script>             
+    <script src="assets/js/scripts.js"></script>
+    <script src="assets/js/model/Sacola.js"></script>
+    <script src="assets/js/controller/SacolaController.js"></script>
+    <script src="assets/js/controller/ProdutoController.js"></script>
+
+  </body>
+</html>

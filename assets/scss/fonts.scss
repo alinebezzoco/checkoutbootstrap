@@ -1,0 +1,35 @@
+// Importando as fontes do site
+
+@import 
+    url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+@import 
+    url(http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
+
+@font-face { 
+    font-family: 'Baskerville Regular';
+    src: url('fonts/baskerville-regular.woff2') format('woff2'),
+         url('fonts/baskerville-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face { 
+    font-family: 'Bell Centennial';
+    src: url('fonts/bellcentennialbt-address.woff2') format('woff2'),
+        url('fonts/bellcentennialbt-address.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+// Titulos, textos corridos e precos
+$titulo: 'Bell Centennial', sans-serif;
+$texto: 'Open Sans', sans-serif;
+$preco: 'Baskerville Regular', serif;
+
+// Peso do corpo do texto
+$light: 300;
+$regular: 400;
+$bold: 600;
+$extrabold: 700;
+

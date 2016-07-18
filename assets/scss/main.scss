@@ -1,0 +1,68 @@
+// Geral 
+* {
+    margin: 0 auto;
+    padding: 0;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-image: url('http://puppyprepschool.com/wp-content/uploads/2014/05/paw-print-seamless-pattern3.png');
+}
+
+// Corpo do titulo, descricao, texto, preco 
+h1 { 
+	font-family: $titulo;
+	font-weight: $light;
+
+	font-size: 30px;
+	color: black;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	padding-bottom: 65px;
+}
+
+h2 { 
+	font-family: $titulo;
+	font-weight: $light;
+
+	font-size: 20px;
+	color: black;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+	padding-bottom: 40px;
+}
+
+h3 { 
+	font-family: $titulo;
+	font-weight: $regular;
+
+	font-size: 14px;
+	color: black;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+
+}
+
+a { 
+	cursor: pointer;
+	color: #8a6d3b !important;
+}
+
+// Icones 
+i.bag { background-image: url('../img/icones/_bag.png'); width: 17px; height: 20px; }
+i.carrinho { background-image: url('../img/icones/carrinho.png'); width: 17px; height: 15px; }
+i.seta { background-image: url('../img/icones/seta.png'); width: 9px; height: 5px; display: inline-block; }
+
+.align-center { text-align: center; }  
+.align-right { text-align: right; }
+.align-left { text-align: left; } 
+
+// No padding 
+.no-padding { padding-left: 0 !important; padding-right: 0 !important; }
+
+

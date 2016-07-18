@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html ng-app>
+
+<head>
+  <meta charset="utf-8">
+  <title>Dog's House</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+
+  <!-- css -->
+  <link href="assets/css/style.css" rel="stylesheet" />
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body ng-controller="SacolaController">
+
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top menu-loja">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/index.html">Dog's House</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/meus-pedidos.html">Meus Pedidos</a></li> 
+                    <li><a href="/minha-conta.html">Minha Conta</a></li>
+                </ul>
+                <ul>
+                  <li class="sacola pull-right">
+                      <a href="/index.html">
+                        <i class="bag"></i>
+                          <p>
+                            Você tem<br>
+                            3 produto(s)
+                            na sacola
+                          </p>                          
+                      </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>      
+  </header> <!--cabecalho -->
+  <div class="container">
+    <div class="stepwizard">
+        <div class="stepwizard-row setup-panel">
+            <div class="stepwizard-step">
+              <a href="#carrinho" type="button" class="btn btn-primary btn-circle">1</a>
+              <p>Carrinho</p>
+            </div>
+            <div class="stepwizard-step">
+              <a href="#cadastro" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+              <p>Cadastro</p>
+            </div>
+            <div class="stepwizard-step">
+              <a href="#entrega" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+              <p>Entrega</p>
+            </div>               
+            <div class="stepwizard-step">
+              <a href="#pagamento" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
+              <p>Pagamento</p>
+            </div>                
+            <div class="stepwizard-step">
+              <a href="#finalizacao" type="button" class="btn btn-default btn-circle" disabled="disabled">5</a>
+              <p>Finalização</p>
+            </div>
+        </div>
+    </div>
+    <form role="form">
+      <div class="row setup-content" id="carrinho">
+        <div class="col-xs-12">
+          <div class="col-md-12">
+            <div class="nome-pagina">
+              <h3>Minha cesta</h3>
+              <p>Clique em finalizar compra para efetuar o seu pedido.</p> 
+              <hr>
+            </div>                          
+            <table class="table table-bordered table-hover table-responsive" ng-controller="ProdutoController">
+              <thead>
+                  <tr>
+                    <th>Produto(s)</th>
+                    <th class="align-center">Preço unitário</th>
+                    <th class="align-center">Quantidade</th>
+                    <th class="align-center">Subtotal</th>
+                    <th class="align-center">Excluir</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="produto in produtos" id="item{{ produto.id }}" class="produto">
+                  <td>
+                    <img ng-src="{{produto.imagem}}" alt="" />
+                    <p>{{produto.nome}}</p>
+                    <p>SKU: <strong>{{ produto.codigo }}</strong></p>
+                    <p>Estoque: <strong>{{ produto.estoque }}</strong></p>
+                  </td>
+                  <td class="align-center">
+                    <p id="item1_valor_unit"> R$ {{ produto.preco }}</p>
+                  </td>
+                  <td>
+                    <form action="/" method="post">
+                      <p class="align-center">
+                        <label for="item{{ produto.id }}_quantidade"></label>
+                        <input ng-model="produto.quantidade" id="item{{ produto.id }}_quantidade" class="form-control" type="number" maxlength="2"/>
+                      </p>
+                    </form>
+                  </td>
+                  <td class="align-center">
+                    <p id="item{{ produto.id }}_valor_total" class="valor-subtotal">R$ {{ produto.preco * produto.quantidade }}</p>
+                  </td>
+                  <td class="align-center">
+                    <a onclick="RemoveTableRow(this)" href="" class="lixeira"><i class="fa fa-trash-o"></i></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table class="table table-bordered table-hover table-responsive total">
+              <tbody>
+                <tr>
+                  <td>
+                    <form onsubmit="">
+                      <label><strong>Calcule o frete:</strong></label>
+                      <input id="cep" type="text" required/>
+                      <button class="btn btn-primary">Calcular</button>  
+                      <a href=""><small><i class="fa-question-circle-o"></i> Não sei o meu cep</small></a> 
+                    </form>
+                  </td>            
+                </tr> 
+                <tr>
+                  <td>
+                    <form action="/" method="post">  
+                      <label><strong>Cupom de desconto:</strong></label>
+                      <input id="" class="" type="text" />
+                      <button class="btn btn-primary">Usar cupom</button>  
+                    </form>
+                  </td>
+                </tr>                                                     
+                <tr>
+                  <td>
+                    <h4>Total: <strong>R$ 0,00</strong></h4>
+                  </td>
+                </tr>
+              </tbody>
+            </table>   
+            <button class="btn nextBtn btn-lg pull-right btn-continuar" type="button">Finalizar compra</button>
+          </div>
+        </div>
+      </div> <!-- checkout carrinho -->
+      <div class="row setup-content" id="cadastro">
+        <div class="col-xs-12">
+          <div class="col-md-12">
+            <div class="nome-pagina">
+              <h3>Sua Conta</h3>
+              <p>Faça o login da sua conta</p>
+              <hr>                
+            </div>                
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <form method="post">
+                  <div class="form-group">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <label class="control-label requiredField" for="email">Email</label>
+                      <input class="form-control" id="email" name="email" type="email" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">                    
+                      <label class="control-label requiredField" for="senha">Senha</label>
+                      <input class="form-control" id="senha" name="senha" type="password" required />
+                    </div>
+                  </div>
+                  <button class="btn nextBtn btn-lg pull-right btn-continuar" type="button">Login</button>  
+                </form>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> <!-- checkout cadastro -->
+      <div class="row setup-content" id="entrega">
+        <div class="col-xs-12">
+          <div class="col-md-12">
+            <div class="nome-pagina">
+              <h3>Entrega</h3>
+              <p>Selecione o endereço abaixo para realizar a entrega ou cadastre um novo endereço</p>
+              <hr>
+            </div>          
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">   
+                <h4>Selecione o endereço de entrega</h4>
+                <hr>         
+                <table class="table table-bordered table-hover table-responsive">
+                  <thead>
+                      <tr>
+                        <th>Tipo</th>
+                        <th>Endereço</th>
+                        <th class="align-center">Selecionar</th>
+                        <th class="align-center">Excluir</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><p>Residencial</p></td>
+                      <td><p>Rua Campo Grande, 1001, Ap 23 - Campo Grande, Rio de Janeiro/RJ CEP: 23080-100</p></td>
+                      <td>
+                        <div class="checkbox align-center">
+                          <label><input type="checkbox" value=""></label>
+                        </div>
+                      </td>
+                      <td class="align-center">
+                        <a onclick="RemoveTableRow(this)" href="" class="lixeira"><i class="fa fa-trash-o"></i></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td><p>Trabalho</p></td>
+                      <td><p>Avenida das Américas, 1001, sala 210 - Barra da Tijuca, Rio de Janeiro/RJ CEP 22620-009</p></td>
+                      <td>
+                        <div class="checkbox align-center">
+                          <label><input type="checkbox" value=""></label>
+                        </div>
+                      </td>
+                      <td class="align-center">
+                        <a onclick="RemoveTableRow(this)" href="" class="lixeira"><i class="fa fa-trash-o"></i></a>
+                      </td>
+                    </tr>                    
+                  </tbody>
+                </table> 
+              </div> <!-- selecionar o endereco de entrega -->          
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-right">
+                <form method="post">
+                  <h4>Cadastrar um novo endereço de entrega</h4>
+                  <hr>
+                  <div class="form-group">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">   
+                      <label class="control-label requiredField" for="tipo-endereco">Tipo de endere&ccedil;o</label>                                                                          
+                      <select class="select form-control" id="tipo-endereco" name="tipo-endereco" required >
+                        <option value="Residencial">Residencial</option>
+                        <option value="Trabalho">Trabalho</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">  
+                      <label class="control-label requiredField" for="endereco">Endere&ccedil;o</label>                                    
+                      <input class="form-control" id="endereco" name="endereco" type="endereco" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                      <label class="control-label requiredField" for="endereco-numero">N&uacute;mero</label>                                                 
+                      <input class="form-control" id="endereco-numero" name="endereco-numero" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">    
+                      <label class="control-label" for="endereco-complemento">Complemento</label>                                           
+                      <input class="form-control" id="endereco-complemento" name="endereco-complemento" type="text" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <label class="control-label requiredField" for="cep">CEP</label>
+                      <input class="form-control" id="cep3" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">                     
+                      <label class="control-label requiredField" for="cidade">Cidade</label>
+                      <input class="form-control" id="cidade" name="cidade" type="text" required />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">                                          
+                      <label class="control-label requiredField" for="uf">Estado</label>
+                      <select class="select form-control" id="uf" name="uf" required >
+                        <option value="RJ">RJ</option>
+                        <option value="SP">SP</option>
+                        <option value="MG">MG</option>
+                        <option value="ES">ES</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button class="btn nextBtn btn-lg pull-right btn-continuar" type="button">Continuar</button>                    
+                </form>                     
+              </div> <!-- cadastrar novo endereco de entrega -->
+            </div> 
+          </div>
+        </div>
+      </div> <!-- checkout entrega -->       
+      <div class="row setup-content" id="pagamento">
+        <div class="col-xs-12">
+          <div class="col-md-12">
+            <div class="nome-pagina">
+              <h3>Forma de pagamento</h3>
+              <p>Selecione a forma de pagamento desejada</p>
+              <hr>                
+            </div>                
+            <form method="post">
+              <div class="form-group">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">   
+                  <label class="control-label requiredField" for="forma-pagamento">Selecione a forma de pagamento</label>                                                                          
+                  <select class="select form-control" id="forma-pagamento" name="forma-pagamento" required >
+                    <option value="debito">Débito</option>
+                    <option value="credito">Cartão de Crédito</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">   
+                  <label class="control-label requiredField" for="selecione-cartao">Selecione o cartão</label>                                                                          
+                  <select class="select form-control" id="selecione-cartao" name="selecione-cartao" required >
+                    <option value="visa">Visa</option>
+                    <option value="master">MasterCard</option>
+                  </select>
+                </div>
+              </div>              
+              <div class="form-group">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"> 
+                  <label class="control-label requiredField" for="num-cartao">Número do cartão</label>
+                  <input class="form-control" id="num-cartao" type="text" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> 
+                  <label class="control-label requiredField" for="val-mes">Mês</label>
+                  <input class="form-control" id="val-mes" type="text" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> 
+                  <label class="control-label requiredField" for="val-ano">Ano</label>
+                  <input class="form-control" id="val-ano" type="text" required />
+                </div>
+              </div> 
+              <div class="form-group">
+                <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12"> 
+                  <label class="control-label requiredField" for="cv">CV</label>
+                  <input class="form-control" id="cv" type="text" required />
+                </div>
+              </div>                                               
+            </form>
+          </div>
+          <button class="btn nextBtn btn-lg pull-right btn-continuar" type="button">Confirmar compra</button>  
+        </div>
+      </div> <!-- checkout pagamento -->
+      <div class="row setup-content" id="finalizacao">
+        <div class="col-xs-12">
+          <div class="col-md-12">
+            <div class="nome-pagina">
+              <h3>Confirmação de compra</h3>
+              <hr>
+            </div> 
+            <h3 class="align-center">Obrigado por comprar na Dog's House!</h3>
+            <h4 class="align-center">Seu número do pedido:</h4>
+            <h4 class="align-center"><strong>#DG0009198</strong></h4>                 
+          </div>  
+        </div>
+      </div> <!-- checkout finalizacao -->         
+    </form>
+  </div> <!-- fim checkout transparent -->
+
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted align-center">
+
+        Dog's House. Avenida das Américas, 4555, lj 101 - Barra da Tijuca, Rio de Janeiro - RJ | CEP 22620-000<br> 
+        2016 Todos os direitos reservados.<br> 
+      </p>
+    </div>
+  </footer> <!-- rodape -->
+
+
+  <!-- javacript -->
+  <script src="assets/js/lib/jquery.js"></script>
+  <script src="assets/js/lib/bootstrap.min.js"></script>   
+  <script src="assets/js/lib/angular.js"></script>
+  <script src="assets/js/lib/jquery.maskedinput.min.js"></script>             
+  <script src="assets/js/scripts.js"></script>
+  <script src="assets/js/model/Sacola.js"></script>
+  <script src="assets/js/controller/SacolaController.js"></script>
+  <script src="assets/js/controller/ProdutoController.js"></script>
+
+</body>
+</html>
